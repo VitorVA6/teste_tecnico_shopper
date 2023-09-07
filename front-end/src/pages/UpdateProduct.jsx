@@ -7,26 +7,34 @@ import api from '../utils/api'
 export default function UpdateProduct() {
 
     const [produtos, setProdutos] = useState([])
-
-    useEffect(()=> {
-        console.log(produtos)
-    }, [produtos])
+    const [csvData, setCsvData] = useState([])
 
     async function handleFiles(ev){
         const csvFile = ev.target.files[0]
         if(csvFile && csvFile.type === "text/csv"){
             papa.parse(csvFile, {
+                header: true,
                 complete: (results) => {
-                    if(results?.data?.length > 1){
-                        const data = results.data.slice(1)
-                        api.post('/products/validate', {data})
-                    }
-                    console.log('Arquivo carregado com sucesso!', results)
+                    const data = results?.data
+                    console.log(data)
+                    setCsvData(data)
                 }
             })
         }else{
             console.log('Arquivo inválido')
         }
+    }
+
+    async function handleValidate(){
+        if(csvData.length > 0){
+            try{
+                const response = await api.post('/products/validate', {csvData})
+                console.log(response)
+            }catch(err){
+                console.log(err.response.data)
+            }
+        }
+        else console.log('Não existem dados a serem atualizados')
     }
 
   return (
@@ -50,7 +58,7 @@ export default function UpdateProduct() {
             </div>
         </div>
         <div className='flex gap-3 justify-end w-full'>
-            <Button handleSubmit={() => {}}>Validar</Button>
+            <Button handleSubmit={handleValidate}>Validar</Button>
             <Button handleSubmit={() => {}}>Atualizar</Button>
         </div>
     </div>
