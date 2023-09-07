@@ -1,10 +1,11 @@
 import './App.css'
+import UpdateProduct from './pages/UpdateProduct'
 
 function App() {
 
   return (
     <>
-      <h1 className='text-red-500'>Ola</h1>  
+      <UpdateProduct />
     </>
   )
 }
