@@ -28,8 +28,8 @@ export default function UpdateProduct() {
     async function handleValidate(){
         if(csvData.length > 0){
             try{
-                const response = await api.post('/products/validate', {csvData})
-                console.log(response)
+                const {data} = await api.post('/products/validate', {csvData})
+                console.log(data)
             }catch(err){
                 console.log(err.response.data)
             }
