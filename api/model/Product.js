@@ -12,6 +12,16 @@ class ProductModel{
         })
     }
 
+    static async getPackById(id){
+        return new Promise(resolve => {
+            db.query(`SELECT * FROM packs WHERE pack_id = '${id}'`, (error, result) => {
+                if(error) console.log(error)
+                resolve(result)
+                
+            })
+        })
+    }
+
 }
 
 module.exports = ProductModel

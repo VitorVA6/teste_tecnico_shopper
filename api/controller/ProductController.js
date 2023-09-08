@@ -32,13 +32,26 @@ module.exports = class ProductController{
                     let cost_price = parseFloat(product.cost_price)
                     let new_price = parseFloat(element.new_price)
                     let sales_price = parseFloat(product.sales_price)
+
                     if( cost_price > new_price) errors = [...errors, errs.low_price]
-                    if(new_price > sales_price*1.1 || new_price < sales_price*0.9){
-                        [...errors, errs.low_price]
+                    if((new_price > sales_price*1.1) || (new_price < sales_price*0.9)) errors = [...errors, errs.price_out_range] 
+                    
+                    const packInfo = await Product.getPackById(element.product_code)
+
+                    if(packInfo.length > 0){
+                        const productExist = csvData.find(el => el.product_code == packInfo[0].product_id)
+                        if(productExist){
+                            if(isNaN(productExist.new_price)||productExist.new_price==='') errors=[...errors, errs.component_price_NaN]
+                            else if(parseFloat(productExist.new_price)*parseInt(packInfo[0].qty) !== new_price) {
+                                errors=[...errors, errs.component_price_error]
+                            }
+                        }else{
+                            errors = [...errors, errs.missing_component_data]
+                        }
                     }
                 }
             }
-            console.log({code: element.product_code, errors})
+            console.log(element.product_code, errors)
         });
         
         return res.status(200).json({message: 'Chegou miseravi'})

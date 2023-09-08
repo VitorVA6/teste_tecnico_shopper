@@ -17,7 +17,19 @@ const errs = {
     },
     price_out_range: {
         title: 'Preço fora do intervalo aceito',
-        message: 'O preço de reajuste não deve ser maior ou menor do que 10% do preço atual'
+        message: 'O preço de reajuste não deve ser maior ou menor do que 10% do preço atual.'
+    },
+    missing_component_data: {
+        title: 'Dados incompletos do pacote',
+        message: 'É necessário adicionar ao arquivo, os dados de todos os produtos que compõem esse pacote.'
+    },
+    component_price_NaN: {
+        title: 'Preço dos componentes não é numérico',
+        message: 'O preço dos produtos que compõem esse pacote, não são numéricos ou não foram informados.'
+    },
+    component_price_error: {
+        title: 'Preço dos componentes não bate',
+        message: 'Os preços dos componentes somados, não resultam no preço do pacote.'
     }
 }
 
