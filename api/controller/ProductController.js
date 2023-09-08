@@ -7,7 +7,7 @@ module.exports = class ProductController{
     static async validate(req, res){
         
         const {csvData} = req.body
-        let validations = csvData.map(el => ({...el, name: 'not found', current_price: 'not found', errors: []}))
+        let validations = csvData.map(el => ({...el, name: '_', current_price: '_', errors: []}))
 
         if(!csvData) return res.status(400).json({error: 'Arquivo inválido'})
 
