@@ -5,6 +5,7 @@ import papa from 'papaparse'
 import api from '../utils/api'
 import {BsExclamationOctagon, BsCheckLg, BsArrowLeftShort} from 'react-icons/bs'
 import currency  from '../utils/currency'
+import notifies from '../utils/notify'
 
 export default function UpdateProduct() {
 
@@ -25,12 +26,11 @@ export default function UpdateProduct() {
                 header: true,
                 complete: (results) => {
                     const data = results?.data
-                    console.log(data)
                     setCsvData(data)
                 }
             })
         }else{
-            console.log('Arquivo inválido')
+            notifies.error('Formato de arquivo inválido')
         }
     }
 
@@ -56,10 +56,10 @@ export default function UpdateProduct() {
                 setShow(data.map(el => ({id: el.product_code, status: false})))
                 setProdutos(data)
             }catch(err){
-                console.log(err.response.data)
+                notifies.error(err.response.data.error)
             }
         }
-        else console.log('Não existem dados a serem atualizados')
+        else notifies.error('Não existem dados para validar')
     }
 
     function checkValidate(){
@@ -68,12 +68,12 @@ export default function UpdateProduct() {
         for (let i = 0; i < produtos.length; i++) {
             if(produtos[i].errors.length > 0) valid = false
         }
-        console.log(valid)
         return valid
     }
 
   return (
     <div className='w-screen flex pb-12 flex-col lg:px-12 xl:px-32'>
+        <notifies.Container />
         <h1 className='font-bold text-[28px] py-12 text-black/80'>Atualizar produto</h1>
         <div className='flex flex-col w-full border rounded-md bg-gray-50 justify-center items-center'>
             <div className='flex w-full bg-white px-8 py-5 font-medium text-[18px] text-400 border-b text-black/80 justify-between'>

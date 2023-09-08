@@ -14,7 +14,7 @@ module.exports = class ProductController{
         if(csvData.length===0) return res.status(400).json({error: 'Arquivo não possui nenhum dado'})
 
         if(csvData[0].product_code===undefined || csvData[0].new_price===undefined){
-            return res.status(400).json({error: 'Arquivo não possui os campos necessários'})
+            return res.status(400).json({error: 'Arquivo não possui os campos necessários.'})
         }
 
         for (let i = 0; i < validations.length; i++) {
