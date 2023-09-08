@@ -1,5 +1,5 @@
 const Product = require('../model/Product')
-const {priceMissing, priceIsValid, codeMissing, codeIsValid} = require('../utils/validations')
+const {priceMissing, priceIsValid} = require('../utils/validations')
 const errs = require('../utils/errors')
 
 module.exports = class ProductController{
@@ -57,6 +57,22 @@ module.exports = class ProductController{
     }
 
     static async update(req, res){
-        res.status(200).json({message: 'Produtos atualizados com sucesso'})
+        const {csvData} = req.body
+
+        try{
+            csvData.forEach(async element => {
+                const packInfo = await Product.getPackById(element.product_code)
+                if(packInfo.length > 0){
+                    const component = await Product.getById(packInfo[0].product_id)
+                    const costPrice = parseFloat(component[0].cost_price)*parseFloat(packInfo[0].qty)
+                    await Product.updatePack(element.product_code, element.new_price, costPrice)
+                }else{
+                    await Product.updateProduct(element.product_code, element.new_price)
+                }
+            });
+            return res.status(200).json({message: 'Produtos atualizados com sucesso'})
+        }catch(err){
+            return res.status(500).json({error: 'Ocorreu um erro na atualização do produto'})
+        }
     }
 }

@@ -62,6 +62,18 @@ export default function UpdateProduct() {
         else notifies.error('Não existem dados para validar')
     }
 
+    async function handleUpdate(){
+        try{
+            const {data} = await api.put('/products/update', {csvData})
+            setCsvData([])
+            setProdutos([])
+            notifies.sucess(data.message)
+        }catch(err){
+            notifies.error(err.response.data.error)
+        }
+    }
+    
+
     function checkValidate(){
         if(produtos.length === 0) return false
         let valid = true
@@ -170,7 +182,7 @@ export default function UpdateProduct() {
         </div>
         <div className='flex gap-3 justify-end w-full mt-4'>
             <Button handleSubmit={handleValidate}>Validar</Button>
-            <Button handleSubmit={() => console.log('oi')} disable={disable}>Atualizar</Button>
+            <Button handleSubmit={handleUpdate} disable={disable}>Atualizar</Button>
         </div>
     </div>
   )
