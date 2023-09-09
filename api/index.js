@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const productRoutes = require('./routes/ProductRoutes')
@@ -8,7 +9,7 @@ const port = 4000
 
 app.use(cors({
     credentials: true,
-    origin: 'http://[::1]:5173',
+    origin: process.env.APP_URL
   }));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
