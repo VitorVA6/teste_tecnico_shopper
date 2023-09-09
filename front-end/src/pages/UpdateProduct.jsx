@@ -4,6 +4,7 @@ import Button from '../components/Button'
 import papa from 'papaparse'
 import api from '../utils/api'
 import {BsExclamationOctagon, BsCheckLg, BsArrowLeftShort} from 'react-icons/bs'
+import {BiChevronDown} from 'react-icons/bi'
 import currency  from '../utils/currency'
 import notifies from '../utils/notify'
 
@@ -56,7 +57,8 @@ export default function UpdateProduct() {
                 setShow(data.map(el => ({id: el.product_code, status: false})))
                 setProdutos(data)
             }catch(err){
-                notifies.error(err.response.data.error)
+                if(err.response) notifies.error(err.response.data.error)
+                else notifies.error('Ocorreu um erro no servidor')
             }
         }
         else notifies.error('Não existem dados para validar')
@@ -69,7 +71,8 @@ export default function UpdateProduct() {
             setProdutos([])
             notifies.sucess(data.message)
         }catch(err){
-            notifies.error(err.response.data.error)
+            if(err.response) notifies.error(err.response.data.error)
+            else notifies.error('Ocorreu um erro no servidor')
         }
     }
     
@@ -153,9 +156,10 @@ export default function UpdateProduct() {
                                     {
                                         el.errors.length > 0 ?
                                         <button 
-                                            className='col-span-1 bg-transparent text-blue-500 font-medium w-fit'
+                                            className='col-span-1 bg-transparent text-blue-500 font-medium w-fit flex items-center gap-1'
                                             onClick={() => handleShow(el.product_code)}
-                                        >{`${checkShow(el.product_code) ? 'Fechar': 'Detalhes'}`}</button> :
+                                        >{`${checkShow(el.product_code) ? 'Fechar': 'Exibir'}`}
+                                        </button> :
                                         <BsCheckLg className='w-5 h-5 text-green-400'/>
                                     }
                                 </div>

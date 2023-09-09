@@ -16,16 +16,16 @@ git clone https://github.com/VitorVA6/teste_tecnico_shopper.git
 
 ## Banco de dados MySQL
 
-Caso suas configurações sejam diferentes, basta alterar o arquivo **.env** presente na pasta **API**. Segue as informações utilizadas para se conectar ao banco de dados:
+Segue as informações utilizadas para se conectar ao banco de dados. Caso suas configurações sejam diferentes, basta alterar o arquivo **.env** presente na pasta **API**. 
 
-- host: localhost
-- user: root
-- password: password
-- database: shopper
+- HOST: localhost
+- USER: root
+- PASSWORD: password
+- DATABASE: shopper
 
 ## Executando a API localmente
 
-Acesse o diretório da api:
+A partir do diretório raiz, acesse o diretório da api:
 ```
 cd api
 ```
@@ -40,7 +40,7 @@ node index.js
 
 ## Executando a aplicação React
 
-Acesse o diretório da aplicação:
+A partir do diretório raiz, acesse o diretório da aplicação react:
 ```
 cd front-end
 ```
