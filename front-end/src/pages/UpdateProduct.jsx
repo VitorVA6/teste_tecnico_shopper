@@ -3,8 +3,7 @@ import {BsFiletypeCsv} from 'react-icons/bs'
 import Button from '../components/Button'
 import papa from 'papaparse'
 import api from '../utils/api'
-import {BsExclamationOctagon, BsCheckLg, BsArrowLeftShort} from 'react-icons/bs'
-import {BiChevronDown} from 'react-icons/bi'
+import {BsExclamationOctagon, BsCheckLg, BsArrowLeftShort, BsHandThumbsUp} from 'react-icons/bs'
 import currency  from '../utils/currency'
 import notifies from '../utils/notify'
 
@@ -31,6 +30,7 @@ export default function UpdateProduct() {
                 }
             })
         }else{
+            setCsvData([])
             notifies.error('Formato de arquivo inválido')
         }
     }
@@ -87,7 +87,7 @@ export default function UpdateProduct() {
     }
 
   return (
-    <div className='w-screen flex pb-12 flex-col lg:px-12 xl:px-32'>
+    <div className='w-screen flex pb-12 flex-col md:px-5 lg:px-12 xl:px-32'>
         <notifies.Container />
         <h1 className='font-bold text-[28px] py-12 text-black/80'>Atualizar produto</h1>
         <div className='flex flex-col w-full border rounded-md bg-gray-50 justify-center items-center'>
@@ -113,9 +113,12 @@ export default function UpdateProduct() {
                         {
                         csvData.length === 0 ?
                         <h2 className='text-gray-400/80 text-[28px] font-semibold'>Faça upload do arquivo para atualizar os dados.</h2>:
-                        <div className='flex flex-col items-center text-gray-400/80'>
-                            <h2 className='text-[28px] font-semibold'>Ótimo! agora você já pode validar os produtos.</h2>
-                            <h2 className='text-[20px] font-semibold'>Ou pode fazer upload de outro arquivo, caso preferir.</h2>
+                        <div className='flex text-gray-400/80 items-center gap-5'>
+                            <BsHandThumbsUp className='text-green-400 w-16 h-16'/>
+                            <div className='flex flex-col'>
+                                <h2 className='text-[28px] font-semibold'>Ótimo! agora você já pode validar os produtos.</h2>
+                                <h2 className='text-[20px] font-semibold'>Ou pode fazer upload de outro arquivo, caso preferir.</h2>
+                            </div>
                         </div>
                         }
                         <label className='cursor-pointer bg-blue-500 py-3 w-48 items-center flex justify-center rounded-md text-white gap-3 font-medium'>
